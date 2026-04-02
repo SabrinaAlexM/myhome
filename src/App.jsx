@@ -177,7 +177,7 @@ function taskUrg(lastDone, interval) {
   const tod = today(), due = addDays(lastDone, interval), d = diffDays(due, tod);
   const pct = Math.min(Math.round((diffDays(tod, lastDone) / interval) * 100), 100);
   if (d < 0) return { label: `${Math.abs(d)}d überfällig`, cls: "p-d", pct: 100, bar: "var(--danger)" };
-  if (d === 0) return { label: "Heute fällig", cls: "p-ok", pct: 100, bar: "var(--mt)" };
+  if (d === 0) return { label: "Heute wär perfekt! ✓", cls: "p-ok", pct: 100, bar: "var(--mt)" };
   if (d <= 3) return { label: `in ${d}d`, cls: "p-w", pct, bar: "var(--gd)" };
   return { label: `in ${d}d`, cls: "p-g", pct, bar: "var(--border)" };
 }
@@ -224,11 +224,11 @@ function Onboarding({ onDone }) {
     <div className="ob mz">
       <div className="ob-ic"><AppLogo size={80} /></div>
       <div className="ob-ti">Mein Zuhause</div>
-      <div className="ob-su">Deine App für Haushalt & Me Time.<br />Einfach. Persönlich. Mit Freude.</div>
+      <div className="ob-su">Deine App für Haushalt & Me Time.<br />Damit du deinen Alltag liebst. 💕</div>
       <div style={{ width: "100%", maxWidth: 320, marginBottom: 24 }}>
         <div className="fg">
           <label className="fl" style={{ textAlign: "left" }}>Wie heisst du?</label>
-          <input className="fi" placeholder="Dein Vorname" value={name} onChange={e => setName(e.target.value)}
+          <input className="fi" placeholder="Wie darf ich dich nennen?" value={name} onChange={e => setName(e.target.value)}
             style={{ fontSize: 20, textAlign: "center", fontWeight: 700 }}
             onKeyDown={e => e.key === "Enter" && name.trim() && setStep(1)} />
         </div>
@@ -247,9 +247,9 @@ function Onboarding({ onDone }) {
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24, background: "#fff", padding: 14, borderRadius: 14, border: "1.5px solid var(--border)", width: "100%", maxWidth: 320, cursor: "pointer" }} onClick={() => setSample(!sample)}>
         <div style={{ width: 26, height: 26, borderRadius: 8, border: "2px solid var(--pk)", background: sample ? "var(--pk)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 14, transition: "all .15s" }}>{sample ? "✓" : ""}</div>
-        <div style={{ fontSize: 14, color: "var(--ink-m)", fontWeight: 500 }}>Mit Beispieldaten starten</div>
+        <div style={{ fontSize: 14, color: "var(--ink-m)", fontWeight: 500 }}>Mit ein paar Beispielen starten</div>
       </div>
-      <button className="btn btn-fw btn-dk" style={{ maxWidth: 320 }} onClick={() => onDone(name.trim(), sample)}>Los geht's 🚀</button>
+      <button className="btn btn-fw btn-dk" style={{ maxWidth: 320 }} onClick={() => onDone(name.trim(), sample)}>Ich freu mich auf dich! 🌸</button>
     </div>
   );
 }
@@ -271,7 +271,7 @@ function AddHaushalt({ onSave }) {
   const hasSel = Object.values(sel).some(Boolean) || (showCust && cust.name.trim());
   if (step === 0) return <>
     <Steps step={0} total={2} />
-    <div className="fg"><div className="fl">Welcher Raum?</div>
+    <div className="fg"><div className="fl">In welchem Raum?</div>
       <div className="rgrid">{ROOMS.map(r => <div key={r.name} className={`ropt${room === r.name ? " s" : ""}`} onClick={() => setRoom(r.name)}><span className="ropt-i">{r.emoji}</span><span className="ropt-n">{r.name}</span></div>)}</div>
     </div>
     <button className="btn btn-fw btn-pk" style={{ opacity: room ? 1 : .4 }} onClick={() => room && setStep(1)}>Weiter →</button>
@@ -299,7 +299,7 @@ function AddHaushalt({ onSave }) {
       <div className="fg"><label className="fl">Intervall (Tage)</label><input className="fi" type="number" min="1" value={cust.interval} onChange={e => setCust(c => ({ ...c, interval: e.target.value }))} /></div>
     </> : <button className="btn-gh" style={{ width: "100%", justifyContent: "center", marginBottom: 12 }} onClick={() => setShowCust(true)}>＋ Eigene Aufgabe</button>}
     <div className="div" />
-    <div className="row" style={{ gap: 10 }}><button className="btn-gh btn-sm" onClick={() => setStep(0)}>← Zurück</button><button className="btn btn-fw btn-pk" style={{ opacity: hasSel ? 1 : .4 }} onClick={hasSel ? doSave : undefined}>Hinzufügen ✓</button></div>
+    <div className="row" style={{ gap: 10 }}><button className="btn-gh btn-sm" onClick={() => setStep(0)}>← Zurück</button><button className="btn btn-fw btn-pk" style={{ opacity: hasSel ? 1 : .4 }} onClick={hasSel ? doSave : undefined}>Alles klar, hinzufügen! ✓</button></div>
   </>;
 }
 
@@ -313,7 +313,7 @@ function EditTaskForm({ item, onSave }) {
       <div className="fg"><label className="fl">Zuletzt</label><input className="fi" type="date" value={f.lastDone} max={today()} onChange={e => setF({ ...f, lastDone: e.target.value })} /></div>
       <div className="fg"><label className="fl">Alle (Tage)</label><input className="fi" type="number" min="1" value={f.interval} onChange={e => setF({ ...f, interval: e.target.value })} /></div>
     </div>
-    <button className="btn btn-fw btn-pk" onClick={() => f.name.trim() && onSave({ ...f, interval: parseInt(f.interval) || 7 })}>Speichern</button>
+    <button className="btn btn-fw btn-pk" onClick={() => f.name.trim() && onSave({ ...f, interval: parseInt(f.interval) || 7 })}>Speichern ✓</button>
   </>;
 }
 
@@ -330,8 +330,8 @@ function Haushalt({ tasks, setTasks }) {
   const grouped = {};
   sorted.forEach(t => { if (!grouped[t.room]) grouped[t.room] = []; grouped[t.room].push(t); });
   return <>
-    <div className="ph"><div className="ph-t">🏠 Haushalt</div><div className="ph-s">Alles im Griff, Schritt für Schritt</div></div>
-    {tasks.length === 0 && <div className="emp"><span className="emp-i">🏠</span>Noch keine Aufgaben.<br />Tippe auf ＋ und leg los!</div>}
+    <div className="ph"><div className="ph-t">🏠 Haushalt</div><div className="ph-s">Schritt für Schritt — du schaffst das! ✨</div></div>
+    {tasks.length === 0 && <div className="emp"><span className="emp-i">🏠</span>Hier ist noch alles ruhig. 🌿 Tippe auf ＋ und richte deinen Putzplan ein!</div>}
     {Object.entries(grouped).map(([room, rt]) => {
       const ri = ROOMS.find(r => r.name === room);
       return <div key={room} style={{ marginBottom: 18 }}>
@@ -359,7 +359,7 @@ function Haushalt({ tasks, setTasks }) {
       </div>;
     })}
     <div className="fab"><button className="fabb" style={{ background: "var(--pk)" }} onClick={() => setShowAdd(true)}>＋</button></div>
-    {showAdd && <Sheet title="Aufgabe hinzufügen" onClose={() => setShowAdd(false)}><AddHaushalt onSave={addBulk} /></Sheet>}
+    {showAdd && <Sheet title="Neue Aufgabe anlegen" onClose={() => setShowAdd(false)}><AddHaushalt onSave={addBulk} /></Sheet>}
     {detail && !editItem && <Sheet title={`${detail.emoji} ${detail.name}`} onClose={() => setDetail(null)}>
       {(() => { const u = taskUrg(detail.lastDone, detail.interval); return <>
         <div className="ir"><span className="il">Raum</span><span className="iv">{detail.room}</span></div>
@@ -368,16 +368,16 @@ function Haushalt({ tasks, setTasks }) {
         <div className="ir"><span className="il">Nächste Fälligkeit</span><span className="iv">{fmtL(addDays(detail.lastDone, detail.interval))}</span></div>
         <div className="ir"><span className="il">Status</span><span className={`pill ${u.cls}`}>{u.label}</span></div>
         <div className="div" />
-        <button className="btn btn-fw btn-pk" style={{ marginBottom: 10 }} onClick={() => markDone(detail.id, tod)}>✓ Heute erledigt</button>
-        <button className="btn-gh" style={{ width: "100%", justifyContent: "center", marginBottom: 10 }} onClick={() => setDoneM({ item: detail, date: tod })}>📅 Anderes Datum wählen</button>
+        <button className="btn btn-fw btn-pk" style={{ marginBottom: 10 }} onClick={() => markDone(detail.id, tod)}>✓ Erledigt — super gemacht!</button>
+        <button className="btn-gh" style={{ width: "100%", justifyContent: "center", marginBottom: 10 }} onClick={() => setDoneM({ item: detail, date: tod })}>📅 Anderes Wann war es?</button>
         <div className="div" />
         <div className="row" style={{ gap: 8 }}><button className="btn-gh" style={{ flex: 1 }} onClick={() => { setEditItem(detail); setDetail(null); }}>✏️ Bearbeiten</button><button className="btn-dng" onClick={() => del(detail.id)}>🗑️</button></div>
       </>; })()}
     </Sheet>}
-    {editItem && <Sheet title="Aufgabe bearbeiten" onClose={() => setEditItem(null)}><EditTaskForm item={editItem} onSave={f => { setTasks(tasks.map(t => t.id === editItem.id ? { ...t, ...f } : t)); setEditItem(null); }} /></Sheet>}
-    {doneM && <Sheet title="Datum wählen" onClose={() => setDoneM(null)}>
-      <div className="fg"><label className="fl">Wann erledigt?</label><input className="fi" type="date" value={doneM.date} max={tod} onChange={e => setDoneM({ ...doneM, date: e.target.value })} /></div>
-      <button className="btn btn-fw btn-pk" onClick={() => markDone(doneM.item.id, doneM.date)}>Bestätigen</button>
+    {editItem && <Sheet title="Aufgabe anpassen" onClose={() => setEditItem(null)}><EditTaskForm item={editItem} onSave={f => { setTasks(tasks.map(t => t.id === editItem.id ? { ...t, ...f } : t)); setEditItem(null); }} /></Sheet>}
+    {doneM && <Sheet title="Wann war es?" onClose={() => setDoneM(null)}>
+      <div className="fg"><label className="fl">Super! Wann hast du es erledigt?</label><input className="fi" type="date" value={doneM.date} max={tod} onChange={e => setDoneM({ ...doneM, date: e.target.value })} /></div>
+      <button className="btn btn-fw btn-pk" onClick={() => markDone(doneM.item.id, doneM.date)}>Ja, genau so! ✓</button>
     </Sheet>}
   </>;
 }
@@ -417,7 +417,7 @@ function AddMeTime({ initial, onSave }) {
     </>}
     {step === 1 && <>
       <div style={{ textAlign: "center", marginBottom: 20 }}><div style={{ fontSize: 40 }}>{f.emoji}</div><div style={{ fontFamily: "Poppins,sans-serif", fontWeight: 800, fontSize: 20, marginTop: 4 }}>{f.name}</div></div>
-      <div className="fg"><label className="fl">Wie oft möchtest du gehen?</label>
+      <div className="fg"><label className="fl">Wie oft gönnst du dir das?</label>
         <div style={{ background: "var(--surface)", borderRadius: 16, padding: 18, border: "2px solid var(--border)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <div style={{ flex: 1, textAlign: "center" }}>
@@ -435,14 +435,14 @@ function AddMeTime({ initial, onSave }) {
           <div style={{ textAlign: "center", fontSize: 13, color: "var(--pk)", fontWeight: 700, marginTop: 10 }}>Alle {f.minDays}–{f.maxDays} Tage · Ideal: {mid}d</div>
         </div>
       </div>
-      <div className="fg"><label className="fl">Zuletzt dort gewesen?</label>
+      <div className="fg"><label className="fl">Wann warst du zuletzt dort?</label>
         <input className="fi" type="date" value={f.lastDone} max={today()} onChange={e => setF({ ...f, lastDone: e.target.value })} />
         <div style={{ fontSize: 12, color: "var(--ink-l)", marginTop: 2 }}>{fmtAgo(diffDays(today(), f.lastDone))}</div>
       </div>
       <div className="row" style={{ gap: 10 }}><button className="btn-gh btn-sm" onClick={() => setStep(0)}>← Zurück</button><button className="btn btn-fw btn-gd" onClick={() => setStep(2)}>Weiter →</button></div>
     </>}
     {step === 2 && <>
-      <div className="tip">💡 Fixe Termine eintragen (z. B. vor Ferien). Grosse Lücken werden erkannt — Zwischentermine auf Knopfdruck einfügen.</div>
+      <div className="tip">💡 Hast du schon einen fixen Termin — z. B. vor den Ferien? Trag ihn ein! Wenn eine zu grosse Lücke entsteht, schlage ich dir automatisch einen Zwischentermin vor. 💡</div>
       <div style={{ height: 14 }} />
       {f.slots.map((slot, i) => {
         const c = computed[i];
@@ -501,8 +501,8 @@ function MeTime({ appts, setAppts }) {
     return diffDays(na, tod) - diffDays(nb, tod);
   });
   return <>
-    <div className="ph"><div className="ph-t">🌸 Me Time</div><div className="ph-s">Deine persönlichen Termine & Pflege</div></div>
-    {sorted.length === 0 && <div className="emp"><span className="emp-i">💆</span>Noch keine Termine.<br />Tippe auf ＋ und füge deinen ersten hinzu!</div>}
+    <div className="ph"><div className="ph-t">🌸 Me Time</div><div className="ph-s">Weil du dir selbst etwas Gutes tun darfst 💆</div></div>
+    {sorted.length === 0 && <div className="emp"><span className="emp-i">💆</span>Noch nichts geplant — dabei verdienst du dir so viel Schönes! 🌸 Tippe auf ＋ und fang an.</div>}
     {sorted.map(a => {
       const dates = calcSlots(a.lastDone, a.minDays, a.maxDays, a.slots);
       const next1 = dates[0]?.date;
@@ -532,7 +532,7 @@ function MeTime({ appts, setAppts }) {
       </div>;
     })}
     <div className="fab"><button className="fabb" style={{ background: "var(--gd)" }} onClick={() => { setEditItem(null); setShowAdd(true); }}>＋</button></div>
-    {(showAdd || editItem) && <Sheet title={editItem ? "Termin bearbeiten" : "Neuer Termin"} onClose={() => { setShowAdd(false); setEditItem(null); }}>
+    {(showAdd || editItem) && <Sheet title={editItem ? "Termin anpassen" : "Neues Me-Time-Erlebnis"} onClose={() => { setShowAdd(false); setEditItem(null); }}>
       <AddMeTime initial={editItem} onSave={data => { setAppts(editItem ? migrated.map(a => a.id === data.id ? data : a) : [...migrated, data]); setShowAdd(false); setEditItem(null); }} />
     </Sheet>}
     {detail && !editItem && <Sheet title={`${detail.emoji} ${detail.name}`} onClose={() => setDetail(null)}>
@@ -559,16 +559,16 @@ function MeTime({ appts, setAppts }) {
             </div>
           ))}
           <div className="div" />
-          <button className="btn btn-fw btn-gd" style={{ marginBottom: 10 }} onClick={() => markDone(detail.id, tod)}>✓ Heute erledigt</button>
-          <button className="btn-gh" style={{ width: "100%", justifyContent: "center", marginBottom: 10 }} onClick={() => setDoneM({ item: detail, date: tod })}>📅 Anderes Datum wählen</button>
+          <button className="btn btn-fw btn-gd" style={{ marginBottom: 10 }} onClick={() => markDone(detail.id, tod)}>✓ Genossen — wunderbar!</button>
+          <button className="btn-gh" style={{ width: "100%", justifyContent: "center", marginBottom: 10 }} onClick={() => setDoneM({ item: detail, date: tod })}>📅 Anderes Wann war es?</button>
           <div className="div" />
           <div className="row" style={{ gap: 8 }}><button className="btn-gh" style={{ flex: 1 }} onClick={() => { setEditItem(detail); setDetail(null); }}>✏️ Bearbeiten</button><button className="btn-dng" onClick={() => del(detail.id)}>🗑️</button></div>
         </>;
       })()}
     </Sheet>}
-    {doneM && <Sheet title="Datum wählen" onClose={() => setDoneM(null)}>
+    {doneM && <Sheet title="Wann war es?" onClose={() => setDoneM(null)}>
       <div className="fg"><label className="fl">Wann war der Termin?</label><input className="fi" type="date" value={doneM.date} max={tod} onChange={e => setDoneM({ ...doneM, date: e.target.value })} /></div>
-      <button className="btn btn-fw btn-gd" onClick={() => markDone(doneM.item.id, doneM.date)}>Bestätigen</button>
+      <button className="btn btn-fw btn-gd" onClick={() => markDone(doneM.item.id, doneM.date)}>Ja, genau so! ✓</button>
     </Sheet>}
   </>;
 }
@@ -605,7 +605,7 @@ function Home({ name, tasks, appts, nav }) {
       </div>
     </div>
     {urgent.length > 0 && <>
-      <div className="sec">Anstehend & Überfällig</div>
+      <div className="sec">Das steht als Nächstes an</div>
       <div className="card">
         {urgent.map(item => (
           <div className="item" key={`${item.kind}${item.id}`} style={{ cursor: "pointer" }} onClick={() => nav(item.kind === "h" ? "haushalt" : "metime")}>
@@ -620,14 +620,14 @@ function Home({ name, tasks, appts, nav }) {
       <div className="card" style={{ padding: 24, textAlign: "center" }}>
         <div style={{ fontSize: 36, marginBottom: 8 }}>✨</div>
         <div style={{ fontFamily: "Poppins,sans-serif", fontWeight: 700, fontSize: 16 }}>Alles erledigt!</div>
-        <div style={{ fontSize: 13, color: "var(--ink-l)", marginTop: 4 }}>Gönn dir was! 🌸</div>
+        <div style={{ fontSize: 13, color: "var(--ink-l)", marginTop: 4 }}>Du hast dir etwas Schönes verdient! 🌸</div>
       </div>
     )}
     {tasks.length === 0 && appts.length === 0 && (
       <div className="card" style={{ padding: 28, textAlign: "center" }}>
         <div style={{ fontSize: 36, marginBottom: 10 }}>🚀</div>
-        <div style={{ fontFamily: "Poppins,sans-serif", fontWeight: 700, fontSize: 16 }}>Bereit loszulegen?</div>
-        <div style={{ fontSize: 13, color: "var(--ink-l)", marginTop: 6, lineHeight: 1.6 }}>Tippe auf Haushalt oder Me Time.</div>
+        <div style={{ fontFamily: "Poppins,sans-serif", fontWeight: 700, fontSize: 16 }}>Schön, dass du da bist! 🏡</div>
+        <div style={{ fontSize: 13, color: "var(--ink-l)", marginTop: 6, lineHeight: 1.6 }}>Tippe auf Haushalt oder Me Time und leg ganz entspannt los.</div>
       </div>
     )}
   </>;
@@ -654,7 +654,7 @@ function Settings({ name, onSetName, onClear }) {
       </div>
       <div className="imp-block">
         <div className="imp-ti">⚠️ Haftungsausschluss</div>
-        <div className="imp-tx">Die App wird ohne jegliche Garantie bereitgestellt. Für Datenverlust durch technische Probleme, Browser-Updates oder Gerätewechsel wird keine Haftung übernommen. Die Nutzung erfolgt auf eigene Verantwortung.</div>
+        <div className="imp-tx">Die App wird ohne jegliche Garantie bereitgestellt. Für Deine Datenverlust durch technische Probleme, Browser-Updates oder Gerätewechsel wird keine Haftung übernommen. Die Nutzung erfolgt auf eigene Verantwortung.</div>
       </div>
       <div className="imp-block">
         <div className="imp-ti">🔗 Weitergabe</div>
@@ -688,7 +688,7 @@ function Settings({ name, onSetName, onClear }) {
       </div>
       <div className="imp-block">
         <div className="imp-ti">🗑️ Daten löschen</div>
-        <div className="imp-tx">Alle Daten können jederzeit unter Einstellungen → «Alle Daten löschen» entfernt werden. Alternativ: Browser-Daten des Geräts löschen.</div>
+        <div className="imp-tx">Deine Daten gehören dir. Du kannst sie jederzeit unter Einstellungen → «Alle Daten löschen» vollständig entfernen. Alternativ: Browser-Daten des Geräts löschen.</div>
       </div>
     </div>
   );
@@ -697,7 +697,7 @@ function Settings({ name, onSetName, onClear }) {
     <div className="mz" style={{ flex: 1 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
         <button className="icob" onClick={() => setPage(null)}>←</button>
-        <div style={{ fontFamily: "Poppins,sans-serif", fontWeight: 800, fontSize: 22 }}>Über die App</div>
+        <div style={{ fontFamily: "Poppins,sans-serif", fontWeight: 800, fontSize: 22 }}>Über Mein Zuhause</div>
       </div>
       <div style={{ textAlign: "center", padding: "20px 0 24px" }}>
         <AppLogo size={72} />
@@ -731,7 +731,7 @@ function Settings({ name, onSetName, onClear }) {
 
   return <>
     <div className="ph"><div className="ph-t">⚙️ Einstellungen</div></div>
-    <div className="sec">Mein Profil</div>
+    <div className="sec">Dein Profil</div>
     <div className="card" style={{ padding: 16, marginBottom: 16 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 14 }}>
         <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg,var(--pk-d),var(--pk))", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, color: "#fff", fontFamily: "Poppins,sans-serif", fontWeight: 800, flexShrink: 0 }}>
@@ -739,7 +739,7 @@ function Settings({ name, onSetName, onClear }) {
         </div>
         <div style={{ fontFamily: "Poppins,sans-serif", fontWeight: 700, fontSize: 16 }}>{name || "–"}</div>
       </div>
-      <div className="fg"><label className="fl">Name ändern</label><input className="fi" value={nameV} onChange={e => setNameV(e.target.value)} /></div>
+      <div className="fg"><label className="fl">Dein Name</label><input className="fi" value={nameV} onChange={e => setNameV(e.target.value)} /></div>
       <button className="btn btn-pk btn-sm" onClick={() => nameV.trim() && onSetName(nameV.trim())} style={{ display: "flex", width: "100%", justifyContent: "center" }}>Speichern</button>
     </div>
 
@@ -763,10 +763,10 @@ function Settings({ name, onSetName, onClear }) {
       {!confirm
         ? <button className="btn-dng" style={{ width: "100%", textAlign: "center", padding: 13 }} onClick={() => setConfirm(true)}>🗑️ Alle Daten löschen</button>
         : <>
-          <div style={{ fontSize: 14, color: "var(--danger)", fontWeight: 700, marginBottom: 12, textAlign: "center" }}>Wirklich alles unwiderruflich löschen?</div>
+          <div style={{ fontSize: 14, color: "var(--danger)", fontWeight: 700, marginBottom: 12, textAlign: "center" }}>Bist du sicher? Alle Daten werden dauerhaft gelöscht.</div>
           <div className="row" style={{ gap: 8 }}>
             <button className="btn-gh btn-sm" style={{ flex: 1, justifyContent: "center" }} onClick={() => setConfirm(false)}>Abbrechen</button>
-            <button className="btn-dng btn-sm" onClick={onClear}>Ja, löschen</button>
+            <button className="btn-dng btn-sm" onClick={onClear}>Ja, alles löschen</button>
           </div>
         </>}
     </div>

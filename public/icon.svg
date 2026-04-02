@@ -1,4 +1,91 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="22" fill="#00B09B"/>
-  <text y=".9em" font-size="72" x="13">🏡</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#CC2060"/>
+      <stop offset="50%" style="stop-color:#FF4F81"/>
+      <stop offset="100%" style="stop-color:#FF8FAA"/>
+    </linearGradient>
+    <linearGradient id="wall" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="100%" style="stop-color:#FFD6E7"/>
+    </linearGradient>
+    <linearGradient id="roof" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.95"/>
+      <stop offset="100%" style="stop-color:#FFE0EC;stop-opacity:0.88"/>
+    </linearGradient>
+    <linearGradient id="door" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF4F81"/>
+      <stop offset="100%" style="stop-color:#CC2060"/>
+    </linearGradient>
+    <linearGradient id="win" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFF8E0"/>
+      <stop offset="100%" style="stop-color:#FFE88A"/>
+    </linearGradient>
+    <filter id="sh">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#7A0030" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <!-- App icon background -->
+  <rect width="512" height="512" rx="115" fill="url(#bg)"/>
+  <rect width="512" height="512" rx="115" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="4"/>
+
+  <!-- Subtle background pattern circles -->
+  <circle cx="420" cy="80" r="70" fill="rgba(255,255,255,0.06)"/>
+  <circle cx="80" cy="430" r="90" fill="rgba(255,255,255,0.05)"/>
+
+  <!-- Chimney (behind roof) -->
+  <rect x="312" y="148" width="42" height="68" rx="9" fill="url(#wall)" opacity="0.9"/>
+  <!-- Smoke -->
+  <circle cx="333" cy="130" r="11" fill="rgba(255,255,255,0.38)"/>
+  <circle cx="344" cy="114" r="8" fill="rgba(255,255,255,0.25)"/>
+  <circle cx="328" cy="101" r="6" fill="rgba(255,255,255,0.15)"/>
+
+  <!-- House with shadow -->
+  <g filter="url(#sh)">
+    <!-- Roof -->
+    <path d="M118 264 L256 148 L394 264 Z"
+          fill="url(#roof)"
+          stroke="rgba(255,255,255,0.55)" stroke-width="3" stroke-linejoin="round"/>
+    <!-- Roof inner highlight -->
+    <path d="M175 233 L256 180 L337 233"
+          fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Walls -->
+    <rect x="150" y="257" width="212" height="170" rx="12" fill="url(#wall)"/>
+
+    <!-- Left window -->
+    <rect x="170" y="280" width="58" height="52" rx="10" fill="url(#win)"/>
+    <line x1="199" y1="280" x2="199" y2="332" stroke="rgba(200,100,50,0.35)" stroke-width="2.5"/>
+    <line x1="170" y1="306" x2="228" y2="306" stroke="rgba(200,100,50,0.35)" stroke-width="2.5"/>
+    <path d="M175 286 Q181 285 187 291" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Right window -->
+    <rect x="284" y="280" width="58" height="52" rx="10" fill="url(#win)"/>
+    <line x1="313" y1="280" x2="313" y2="332" stroke="rgba(200,100,50,0.35)" stroke-width="2.5"/>
+    <line x1="284" y1="306" x2="342" y2="306" stroke="rgba(200,100,50,0.35)" stroke-width="2.5"/>
+    <path d="M289 286 Q295 285 301 291" fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Door (arched) -->
+    <path d="M222 427 L222 347 Q222 334 256 334 Q290 334 290 347 L290 427 Z"
+          fill="url(#door)"/>
+    <!-- Door shine -->
+    <ellipse cx="238" cy="356" rx="9" ry="15" fill="rgba(255,255,255,0.20)"/>
+    <!-- Knob -->
+    <circle cx="280" cy="384" r="6" fill="rgba(255,255,255,0.82)"/>
+    <circle cx="280" cy="384" r="3" fill="rgba(220,60,100,0.5)"/>
+  </g>
+
+  <!-- Heart above door -->
+  <path d="M256 316 C256 316 246 307 246 300 C246 295.5 249.5 292 254 295.5 C254.8 296.3 255.4 297 256 298 C256.6 297 257.2 296.3 258 295.5 C262.5 292 266 295.5 266 300 C266 307 256 316 256 316 Z"
+        fill="rgba(255,255,255,0.78)"/>
+
+  <!-- Ground -->
+  <ellipse cx="256" cy="430" rx="120" ry="7" fill="rgba(255,255,255,0.18)"/>
+
+  <!-- Little plants -->
+  <rect x="130" y="408" width="5" height="22" rx="2.5" fill="rgba(255,255,255,0.45)"/>
+  <ellipse cx="132" cy="406" rx="10" ry="8" fill="rgba(180,255,200,0.55)"/>
+  <rect x="372" y="408" width="5" height="22" rx="2.5" fill="rgba(255,255,255,0.45)"/>
+  <ellipse cx="374" cy="406" rx="10" ry="8" fill="rgba(180,255,200,0.55)"/>
 </svg>

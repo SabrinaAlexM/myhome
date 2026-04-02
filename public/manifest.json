@@ -1,0 +1,29 @@
+{
+  "name": "Mein Zuhause",
+  "short_name": "Zuhause",
+  "description": "Deine persönliche App für Haushalt & Me Time",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF9FC",
+  "theme_color": "#FF4F81",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}
